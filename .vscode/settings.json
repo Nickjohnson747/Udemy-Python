@@ -1,0 +1,8 @@
+{
+    "window.density.editorTabHeight": "default",
+    "scm.alwaysShowActions": false,
+    "scm.alwaysShowRepositories": false,
+    "editor.wordWrap": "bounded",
+    "workbench.colorTheme": "Monokai",
+    "workbench.preferredDarkColorTheme": "Monokai"
+}
