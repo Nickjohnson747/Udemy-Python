@@ -8,10 +8,17 @@ list_box = sg.Listbox(
     values=functions.get_todos(), key="todos", enable_events=True, size=[45, 10]
 )
 edit_button = sg.Button("Edit")
+complete_button = sg.Button("Complete")
+exit_button = sg.Button("Exit")
 
 window = sg.Window(
     "To-Do App",
-    layout=[[label], [input_box, add_button], [list_box, edit_button]],
+    layout=[
+        [label],
+        [input_box, add_button],
+        [list_box, edit_button, complete_button],
+        [exit_button],
+    ],
     font=("Helvetica", 20),
 )
 
@@ -22,22 +29,39 @@ while True:
 
     match event:
         case "Add":
-            todos = functions.add_todos(values["new_todo"])
+            added_todo = functions.add_todos(values["new_todo"])
             todo_list = functions.get_todos()
 
             window["todos"].update(values=todo_list)
+
         case "Edit":
             todo_list = functions.get_todos()
-            idx = todo_list.index(values["todos"][0])
-            todo_list[idx] = values["new_todo"] + "\n"
+            idx_to_edit = todo_list.index(values["todos"][0])
+
+            # Have to strip new line from list_box and re-add so values don't write onto wrong lines
+            todo_list[idx_to_edit] = values["new_todo".strip("\n")] + "\n"
             functions.edit_todos(todo_list)
 
             window["todos"].update(values=todo_list)
+
+        case "Complete":
+            todo_list = functions.get_todos()
+            completed_todo = values["todos"][0]
+            todo_list.remove(completed_todo)
+            functions.edit_todos(todo_list)
+
+            window["todos"].update(values=todo_list)
+
+        case "Exit":
+            break
+
+        # case occurs when clicking in Listbox
         case "todos":
-            # case occurs when clicking in Listbox
+
             window["new_todo"].update(value=values["todos"][0])
 
         case sg.WIN_CLOSED:
+            # Occurs on hitting 'x' button in gui
             break
 
 window.close()
