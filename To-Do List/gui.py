@@ -50,6 +50,7 @@ while True:
                 window["todos"].update(values=todo_list)
             except IndexError as e:
                 sg.popup("Please select an item first", font=("Helvetica", 20))
+
         case "Complete":
             try:
                 todo_list = functions.get_todos()
@@ -60,12 +61,12 @@ while True:
                 window["todos"].update(values=todo_list)
             except IndexError as e:
                 sg.popup("Please select an item first", font=("Helvetica", 20))
+
         case "Exit":
             break
 
         # case occurs when clicking in Listbox
         case "todos":
-
             window["new_todo"].update(value=values["todos"][0])
 
         case sg.WIN_CLOSED:
