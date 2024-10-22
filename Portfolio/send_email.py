@@ -3,6 +3,7 @@ Do not share this
 """
 
 import smtplib, ssl
+import os
 
 
 def send_email(message):
@@ -10,7 +11,7 @@ def send_email(message):
     port = 465
 
     username = "nickjohnson747@gmail.com"
-    password = "ztmh rcss doec wmvf"
+    password = os.getenv("GMAIL_APP_PASSWORD")  # "ztmh rcss doec wmvf"
 
     receiver = username
     context = ssl.create_default_context()
